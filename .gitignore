@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+*.egg-info/
+*.egg
+build/
+dist/
+
+ENV/
+.venv/
+.tox/
+
+# Linux
+*~
+.fuse_hidden*
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# user
+temp_test.py
+format.sh
+sketch.md
+digest.txt
