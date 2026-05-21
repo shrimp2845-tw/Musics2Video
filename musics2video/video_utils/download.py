@@ -8,9 +8,9 @@ from ..color import red
 from ..configs import M2VConfig
 
 def __sanitize(name: str) -> str:
-    if len(name) < 50:
+    if len(name) < 35:
         return name
-    return name[:47] + '......'
+    return name[:29] + '......'
     
 def __get_title(url: str) -> str:
     ydl_opts = {'quiet': True,
