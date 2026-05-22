@@ -24,7 +24,8 @@ ENV/
 *.sublime-*
 
 # user
-temp_test.py
+temp_test*
+*_temp/
 format.sh
 sketch.md
 digest.txt

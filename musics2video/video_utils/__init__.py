@@ -1,2 +1,2 @@
 #video_utils
-from . import download, merge, generate_img
+from . import download, merge, generate_img, get_title
