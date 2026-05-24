@@ -1,11 +1,18 @@
-import sys
 from urllib.parse import urlparse, parse_qs
 from ytmusicapi import YTMusic
 from yt_dlp import YoutubeDL
 from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig
 
-LOGGER = None
+class __NoLogger:
+    def debug(self, *args, **kwargs):
+        pass
+
+    def warning(self, *args, **kwargs):
+        pass
+
+    def error(self, *args, **kwargs):
+        pass
 
 def sanitize(name: str) -> str:
     if len(name) < 45:
@@ -15,7 +22,8 @@ def sanitize(name: str) -> str:
 def get_all_name(url: str) -> str:
     ydl_opts = {'quiet': True,
             'skip_download': True,
-            'no_warnings': True}
+            'no_warnings': True, 
+            'logger': __NoLogger}
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download = False)
     return info.get('title')
@@ -51,8 +59,4 @@ def get_title(url: str, config: M2VConfig = M2VConfig()) -> str:
         return sanitize(name)
     except Exception as e:
         logger.error(e)
-        sys.exit(1)
-        
-if __name__ == "__main__":
-    user_url = input('?')
-    print(get_title(user_url))
+        raise RuntimeError(e)

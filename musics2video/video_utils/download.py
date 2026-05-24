@@ -9,15 +9,12 @@ from .get_title import get_title
 def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
     title = get_title(url, config = config)
     cmd = ['yt-dlp',
-            '--quiet',
-            '--no-progress',
-            '--no-warnings',
-            '--extract-audio',
-            '--audio-format', 'mp3',
-            '--audio-quality', str(config.audio_quality),
-            '-o', config.temp_dir + name,
+            '-x',
+            '--audio-format', config.yt_audio_format,
+            "--audio-quality", str(config.audio_quality),
+            '-o', f'{config.temp_dir}{name}.{config.yt_audio_format}',
             url]
-    subprocess.run(cmd, check = True)
+    subprocess.run(cmd, check = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
     return title
 
 def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[tuple[str, str]]:
@@ -34,8 +31,8 @@ def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[tu
             que = urls
         titles = []    
         for i, j in enumerate(que, start = 1):
-            titles.append((str(i)+'.mp3', download_one(j, str(i)+'.mp3', config)))
+            titles.append((f'{i}.{config.yt_audio_format}', download_one(j, str(i), config)))
         return titles
     except Exception as e:
         logger.error(e)
-        sys.exit(1)
+        raise RuntimeError(e)
