@@ -1,4 +1,3 @@
-import os
 import subprocess
 from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig

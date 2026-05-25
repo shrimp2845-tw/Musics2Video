@@ -1,5 +1,4 @@
 import logging
-from pathlib import Path
 
 def setup_logging(level: str = "INFO", name: str = 'undifined'):
     level_dict = {"DEBUG": logging.DEBUG,

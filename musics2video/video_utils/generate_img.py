@@ -5,7 +5,6 @@ import logging
 import subprocess
 from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig
-from ..renderer import *
 from PIL import Image
 
 cssutils.log.setLevel(logging.CRITICAL)

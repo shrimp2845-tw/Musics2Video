@@ -1,5 +1,3 @@
-import os
-import sys
 from tqdm import tqdm
 from pathlib import Path
 import subprocess

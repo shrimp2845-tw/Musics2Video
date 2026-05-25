@@ -8,7 +8,7 @@ def renderer(html: str, css: str, img_dir: str):
     hti.browser.flags = ['--headless',
             '--no-sandbox',
             '--disable-gpu',
-            '--log-level=3',
+            '--log-level=4',
             '--disable-gpu-program-cache']
     hti.output_path = output_dir
     hti.screenshot(html_str=html, css_str=css, save_as=output_filename)

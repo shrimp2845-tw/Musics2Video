@@ -2,7 +2,6 @@ import os
 from dataclasses import dataclass, field
 from datetime import datetime
 from .renderer import *
-from .logger import setup_logging, get_logger
 from typing import Callable
 
 @dataclass
@@ -18,10 +17,7 @@ class M2VConfig:
     output_dir: str = './'
     video_format: str = 'mp4'
     def __post_init__(self):
-        setup_logging(name = 'generate_img')
-        logger = get_logger(__name__)
         if not os.path.exists(self.temp_dir):
             os.makedirs(self.temp_dir)
-        if self.use_yt_cover:
-            logger.warning('"use_yt_cover" is a experimental features, might cause unexpected error')
-        
+
+
