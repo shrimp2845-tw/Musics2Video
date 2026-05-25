@@ -75,7 +75,7 @@ def generate_img(titles: list[str], cover: str | None = None, config: M2VConfig 
         for i in range(1, len(titles)+1):
             if config.use_yt_cover:
                 extract_thumbnail(f'{i}.{config.yt_audio_format}', config.temp_dir)
-            img_html = template.replace('{{SONGS}}', song_html(titles, i))            
+            img_html = template.replace('{{SONGS}}', song_html(titles, i))
             output_file_path = str(Path(config.temp_dir) / f'{i}.png')
             renderer(img_html, style, output_file_path)            
     except Exception as e:
