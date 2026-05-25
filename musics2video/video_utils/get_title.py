@@ -15,9 +15,9 @@ class __NoLogger:
         pass
 
 def sanitize(name: str) -> str:
-    if len(name) < 45:
+    if len(name) < 25:
         return name
-    return name[:40] + '......'
+    return name[:23] + '......'
     
 def get_all_name(url: str) -> str:
     ydl_opts = {'quiet': True,
@@ -44,9 +44,8 @@ def get_yt_name(url: str) -> str | None:
     track_info = ytm.get_song(video_id)
     video_details = track_info.get('videoDetails', {})       
     song_title = video_details.get('title')
-    artist = video_details.get('author')
-    if artist and song_title:
-        return f'{song_title} - {artist}'
+    if song_title:
+        return song_title
     return None
     
 def get_title(url: str, config: M2VConfig = M2VConfig()) -> str:

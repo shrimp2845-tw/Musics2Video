@@ -1,0 +1,53 @@
+/* style.css */
+
+body {
+    margin: 0;
+    background: #c7a7b1;
+
+    font-family: Arial, sans-serif;
+
+    width: 1920px;
+    height: 1080px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    gap: 60px;
+
+    align-items: flex-start;
+}
+
+.cover img {
+    width: 700px;
+    height: 700px;
+
+    object-fit: cover;
+
+    border-radius: 24px;
+}
+
+.playlist {
+    width: 500px;
+}
+
+.song {
+    font-size: 24px;
+    font-weight: 400;
+
+    line-height: 1.5;
+
+    color: rgb(0, 0, 0);
+
+}
+
+.song.active {
+    font-size: 24px;
+    font-weight: 700;
+    transform: translateX(12px);
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.4);
+}

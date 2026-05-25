@@ -1,6 +1,7 @@
 import os
 import sys
 from tqdm import tqdm
+from pathlib import Path
 import subprocess
 from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig
@@ -11,15 +12,17 @@ def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
     cmd = ['yt-dlp',
             '-x',
             '--audio-format', config.yt_audio_format,
-            "--audio-quality", str(config.audio_quality),
-            '-o', f'{config.temp_dir}{name}.{config.yt_audio_format}',
+            '--audio-quality', str(config.audio_quality),
+            '-o', Path(config.temp_dir) / f'{name}.{config.yt_audio_format}',
             url]
+    if config.use_yt_cover:
+        cmd.insert(2, '--embed-thumbnail')
     subprocess.run(cmd, check = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
     return title
 
-def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[tuple[str, str]]:
+def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[str]:
     """
-    download all musics and return a list[tuple[file_name, music name]]
+    download all musics and return a list[music name]
     """
     setup_logging(level = config.level, name = 'download')
     logger = get_logger(__name__)
@@ -31,7 +34,7 @@ def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[tu
             que = urls
         titles = []    
         for i, j in enumerate(que, start = 1):
-            titles.append((f'{i}.{config.yt_audio_format}', download_one(j, str(i), config)))
+            titles.append(download_one(j, str(i), config))
         return titles
     except Exception as e:
         logger.error(e)
