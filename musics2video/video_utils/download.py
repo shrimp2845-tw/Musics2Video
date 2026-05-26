@@ -11,10 +11,14 @@ def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
             '-x',
             '--audio-format', config.yt_audio_format,
             '--audio-quality', str(config.audio_quality),
-            '-o', Path(config.temp_dir) / f'{name}.{config.yt_audio_format}',
-            url]
+            '-o', str(Path(config.temp_dir) / f'{name}.{config.yt_audio_format}')]
     if config.use_yt_cover:
-        cmd.insert(2, '--embed-thumbnail')
+        cover_dir = Path(config.temp_dir) / config.temp_cover
+        cmd.extend(['--write-thumbnail',  
+                '--convert-thumbnails', 'png',
+                '--paths', f'thumbnail:{str(cover_dir)}',
+                '--output', f'thumbnail:{name}.%(ext)s'])
+    cmd.append(url)
     subprocess.run(cmd, check = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
     return title
 
