@@ -1,3 +1,4 @@
+import sys
 from tqdm import tqdm
 from pathlib import Path
 import subprocess
@@ -8,6 +9,8 @@ from .get_title import get_title
 def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
     title = get_title(url, config = config)
     cmd = ['yt-dlp',
+            '--no-warnings',
+            '--no-progress',
             '-x',
             '--audio-format', config.yt_audio_format,
             '--audio-quality', str(config.audio_quality),
@@ -19,14 +22,14 @@ def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
                 '--paths', f'thumbnail:{str(cover_dir)}',
                 '--output', f'thumbnail:{name}.%(ext)s'])
     cmd.append(url)
-    subprocess.run(cmd, check = True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+    subprocess.run(cmd, check = True, stdout = subprocess.DEVNULL, stderr = sys.stderr)
     return title
 
 def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[str]:
     """
     download all musics and return a list[music name]
     """
-    setup_logging(level = config.level, name = 'download')
+    setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:
         logger.info('start downloading audios')

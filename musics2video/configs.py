@@ -21,6 +21,8 @@ class M2VConfig:
     output_dir: str = './'
     video_format: str = 'mp4'
     resolution: tuple[int, int] = (1920, 1080)
+    fps: int = 10
+    custom_template: str | None = None
     def __post_init__(self):
         if not os.path.exists(self.temp_dir):
             os.mkdir(self.temp_dir)
@@ -28,6 +30,8 @@ class M2VConfig:
             os.mkdir(str(Path(self.temp_dir) / self.temp_cover))
         if not os.path.exists(str(Path(self.temp_dir) / self.temp_cover / 'default_cover.png')):
             shutil.copy(str(Path(BASE_DIR / 'templates' / 'default_cover.png')), str(Path(self.temp_dir) / self.temp_cover / 'default_cover.png'))
+        if self.custom_template:
+            self.custom_template = str(Path(self.custom_template).resolve())
         
 
 

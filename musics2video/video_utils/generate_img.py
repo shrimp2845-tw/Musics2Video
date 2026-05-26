@@ -12,8 +12,12 @@ cssutils.log.setLevel(logging.CRITICAL)
 BASE_DIR = Path(__file__).resolve().parent
 
 def get_styles(config: M2VConfig) -> tuple[str, str]:
-    template_path = (BASE_DIR / '..' / 'templates' / config.style / 'template.html').resolve()
-    style_path = (BASE_DIR / '..' / 'templates' / config.style /  'style.css').resolve()
+    if config.custom_template:
+        template_path = str(Path(config.custom_template) / 'template.html')
+        style_path = str(Path(config.custom_template) / 'style.css')
+    else:
+        template_path = str((BASE_DIR / '..' / 'templates' / config.style / 'template.html').resolve())
+        style_path = str((BASE_DIR / '..' / 'templates' / config.style /  'style.css').resolve())
     with open(style_path, 'r') as f:
         css_content = f.read()
     with open(template_path, 'r') as f:
@@ -42,7 +46,7 @@ def get_cover(cover: str, temp_dir: str, temp_cover: str):
         img.save(png_path, 'PNG')
              
 def generate_img(titles: list[str], cover: str | None = None, config: M2VConfig = M2VConfig()):
-    setup_logging(level = config.level, name = 'generate_img')
+    setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:
         logger.info('get cover image')
@@ -50,7 +54,7 @@ def generate_img(titles: list[str], cover: str | None = None, config: M2VConfig 
             get_cover(cover, config.temp_dir, config.temp_cover)
         logger.info('generating images')
         renderer = config.renderer
-        template, style = get_styles(config)   
+        template, style = get_styles(config)
         for i in range(1, len(titles)+1):
             if os.path.exists(str(Path(config.temp_dir) / config.temp_cover / f'{i}.png')):
                 shutil.copy(str(Path(config.temp_dir) / config.temp_cover / f'{i}.png'), str(Path(config.temp_dir) / 'cover.png'))

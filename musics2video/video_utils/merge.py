@@ -2,16 +2,20 @@ import subprocess
 from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig
 from pathlib import Path
+from tqdm import tqdm
 
 def merge(songs_length: int, video_name: str, config: M2VConfig = M2VConfig()):
-    setup_logging(level = config.level, name = 'merge')
+    setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:
         output_path = str(Path(config.output_dir) / video_name)
         file_list = str(Path(config.temp_dir) / 'videos.txt')
         videos = []
         logger.info('combining images and audios')
-        for i in range(1, songs_length+1):
+        iter = range(1, songs_length+1)
+        if config.level not in ('WARNING', 'ERROR', 'CRITICAL'):
+            iter = tqdm(iter)
+        for i in iter:
             video_path = str((Path(config.temp_dir) / f'{i}.{config.video_format}').resolve())   
             audio_path = str(Path(config.temp_dir) / f'{i}.{config.yt_audio_format}')
             img_path = str(Path(config.temp_dir) / f'{i}.png')
@@ -25,7 +29,7 @@ def merge(songs_length: int, video_name: str, config: M2VConfig = M2VConfig()):
                     '-crf', '30',
                     '-c:a', 'copy',
                     '-pix_fmt', 'yuv420p',
-                    '-r', '10',
+                    '-r', str(config.fps),
                     '-shortest',
                     '-y',
                     video_path]

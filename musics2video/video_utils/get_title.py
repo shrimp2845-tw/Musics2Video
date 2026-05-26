@@ -49,7 +49,7 @@ def get_yt_name(url: str) -> str | None:
     return None
     
 def get_title(url: str, config: M2VConfig = M2VConfig()) -> str:
-    setup_logging(level = config.level, name = 'get_title')
+    setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:
         name = get_yt_name(url)
