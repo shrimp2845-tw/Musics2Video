@@ -58,15 +58,15 @@ body {
 
 .song.active {
     display: block;    
-    font-size: 35px;
+    font-size: 32px;
     font-weight: 700;
-    color: rgb(0, 0, 0);
+    color: rgb(30, 30, 30);
     border: 2px solid #fff; 
     border-radius: 12px;
-    padding: 45px 75px;
+    padding: 25px 40px;
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(7px);
-    text-shadow: 0 0 10px rgba(255,255,255,0.4);
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
     text-align: center; 
 }
 
