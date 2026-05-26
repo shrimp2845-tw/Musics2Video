@@ -13,6 +13,7 @@ dist/
 ENV/
 .venv/
 .tox/
+.env
 
 # Linux
 *~

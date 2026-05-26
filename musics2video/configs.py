@@ -13,7 +13,7 @@ class M2VConfig:
     temp_dir: str = f'./{datetime.now().strftime("%Y%m%d_%H%M%S_%f")}_temp/'
     temp_cover: str = 'temp_cover'
     level: str = 'INFO'
-    yt_audio_format: str = 'm4a'
+    yt_audio_format: str = 'opus'
     audio_quality: int = 0
     style: str = 'classic'
     renderer:  Callable[[str, str, str, tuple[int, int]], None] = html2image_renderer
