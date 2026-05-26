@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import cssutils
 import logging
 import subprocess
 from ..logger import get_logger, setup_logging
@@ -8,7 +7,6 @@ from ..configs import M2VConfig
 from PIL import Image
 import shutil
 
-cssutils.log.setLevel(logging.CRITICAL)
 BASE_DIR = Path(__file__).resolve().parent
 
 def get_styles(config: M2VConfig) -> tuple[str, str]:
