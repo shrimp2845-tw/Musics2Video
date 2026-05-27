@@ -10,12 +10,14 @@ def renderer(html: str, css: str, img_dir: str, resolution: tuple[int, int] = (1
     hti.browser.flags = ['--headless',
             '--timeout=2000',
             '--no-sandbox',
+            '--silence',
             '--disable-gpu',
             '--log-level=3',
+            '--disable_logging',
             '--disable-gpu-program-cache',
             '--no-zygote']
     hti.output_path = output_dir
-    hti.screenshot(html_str=html, css_str=css, save_as=output_filename)
+    hti.screenshot(html_str=html, css_str=css, save_as=output_filename)           
     if resolution != (1920, 1080):
         img = Image.open(str(Path(output_dir) / output_filename))
         resized_img = img.resize(resolution)
