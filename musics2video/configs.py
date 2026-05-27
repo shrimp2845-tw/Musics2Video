@@ -40,7 +40,7 @@ class M2VConfig:
     audio_quality: int = 0
     style: str = 'classic'
     renderer:  Callable[[str, str, str, tuple[int, int]], None] = html2image_renderer
-    use_yt_cover: bool = False
+    use_yt_cover: bool = True
     output_dir: str = './'
     video_format: str = 'mp4'
     resolution: tuple[int, int] = (1920, 1080)

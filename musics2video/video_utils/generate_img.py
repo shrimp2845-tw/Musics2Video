@@ -22,9 +22,9 @@ def get_styles(config: M2VConfig) -> tuple[str, str]:
     else:
         template_path = str((BASE_DIR / '..' / 'templates' / config.style / 'template.html').resolve())
         style_path = str((BASE_DIR / '..' / 'templates' / config.style /  'style.css').resolve())
-    with open(style_path, 'r') as f:
+    with open(style_path, 'r', encoding='utf-8') as f:
         css_content = f.read()
-    with open(template_path, 'r') as f:
+    with open(template_path, 'r', encoding='utf-8') as f:
         template_content = f.read()
     return template_content, css_content
 

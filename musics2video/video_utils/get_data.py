@@ -23,11 +23,11 @@ def get_cover(cover: str, temp_dir: str, temp_cover: str, name: str = 'default_c
         if ext.lower() not in exts:
             raise ValueError('get_cover: invalid image format')
         png_path = Path(temp_dir) / temp_cover / name
-        if img.mode not in ('RGB'):
+        if img.mode != 'RGB':
             img = img.convert('RGB')
         img.save(png_path, 'PNG')
 
-def read_audio_list(name: str) -> list[list[str, str, str | None]]:
+def read_audio_list(name: str) -> list[list[str | None]]:
     """
     Parses text file instructions separating sources, file locations, and individual covers.
 
@@ -35,10 +35,10 @@ def read_audio_list(name: str) -> list[list[str, str, str | None]]:
         name (str): Target text record compilation mapping structure path.
 
     Returns:
-        list[list[str]]: Sub-arrays grouping extraction directives parsed into items rows.
+        list[list[str | None]]: Sub-arrays grouping extraction directives parsed into items rows.
     """
     audio_list = []
-    with open(name, 'r') as f:
+    with open(name, 'r', encoding='utf-8') as f:
         for i in f:
             parts = list(i.strip().split('{{NEXT}}'))
             if not parts:

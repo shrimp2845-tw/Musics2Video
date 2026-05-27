@@ -30,7 +30,7 @@ temp_test/
 *_temp/
 format.sh
 sketch.md
-*.txt
+digest.txt
 hina.png
 kayoko.jpg
 *.mp4
