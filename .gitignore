@@ -26,11 +26,13 @@ ENV/
 
 # user
 temp_test*
+temp_test/
 *_temp/
 format.sh
 sketch.md
-digest.txt
+*.txt
 hina.png
 kayoko.jpg
 *.mp4
+*.mp3
 test_template/

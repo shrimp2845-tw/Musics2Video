@@ -1,7 +1,6 @@
 from urllib.parse import urlparse, parse_qs
 from ytmusicapi import YTMusic
 from yt_dlp import YoutubeDL
-from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig
 
 class __NoLogger:
@@ -49,13 +48,10 @@ def get_yt_name(url: str) -> str | None:
     return None
     
 def get_title(url: str, config: M2VConfig = M2VConfig()) -> str:
-    setup_logging(level = config.level)
-    logger = get_logger(__name__)
-    try:
-        name = get_yt_name(url)
-        if not name:
-            name = get_all_name(url)
+    name = get_yt_name(url)
+    if not name:
+        name = get_all_name(url)
+    name = name.strip()
+    if config.shorten_title:
         return sanitize(name)
-    except Exception as e:
-        logger.error(e)
-        raise RuntimeError(e)
+    return name

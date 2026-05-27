@@ -23,7 +23,12 @@ class M2VConfig:
     resolution: tuple[int, int] = (1920, 1080)
     fps: int = 10
     custom_template: str | None = None
+    shorten_title: bool = True
     def __post_init__(self):
+        if Path(self.temp_dir).resolve() == Path.cwd().resolve() or Path(self.temp_dir).resolve() in Path.cwd().resolve().parents:
+            raise ValueError('invalid temp_dir')
+        if (Path(self.temp_dir) / self.temp_cover).resolve() == Path(self.temp_dir).resolve() or (Path(self.temp_dir) / self.temp_cover).resolve() in Path(self.temp_dir).resolve().parents:
+            raise ValueError('invalid temp_cover')
         if not os.path.exists(self.temp_dir):
             os.mkdir(self.temp_dir)
         if not os.path.exists(str(Path(self.temp_dir) / self.temp_cover)):

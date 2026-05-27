@@ -26,9 +26,6 @@ def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
     return title
 
 def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[str]:
-    """
-    download all musics and return a list[music name]
-    """
     setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:
