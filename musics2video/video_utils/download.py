@@ -1,12 +1,23 @@
 import sys
-from tqdm import tqdm
 from pathlib import Path
 import subprocess
+from tqdm import tqdm
+from .get_title import get_title
 from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig
-from .get_title import get_title
 
 def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
+    """
+    Downloads a single online audio item and optional thumbnail using yt-dlp.
+
+    Args:
+        url (str): The video URL to fetch from.
+        name (str): The filename alias to assign to the downloaded components.
+        config (M2VConfig): Context configuration controls.
+
+    Returns:
+        str: Cleaned track title fetched from metadata.
+    """
     title = get_title(url, config = config)
     cmd = ['yt-dlp',
             '--no-warnings',
@@ -17,7 +28,7 @@ def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
             '-o', str(Path(config.temp_dir) / f'{name}.{config.yt_audio_format}')]
     if config.use_yt_cover:
         cover_dir = Path(config.temp_dir) / config.temp_cover
-        cmd.extend(['--write-thumbnail',  
+        cmd.extend(['--write-thumbnail',
                 '--convert-thumbnails', 'png',
                 '--paths', f'thumbnail:{str(cover_dir)}',
                 '--output', f'thumbnail:{name}.%(ext)s'])
@@ -26,6 +37,16 @@ def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
     return title
 
 def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[str]:
+    """
+    Downloads a sequence of online audios concurrently with an active progress bar view.
+
+    Args:
+        urls (list[str]): Group collection of web track links.
+        config (M2VConfig): Pipeline setting options wrapper.
+
+    Returns:
+        list[str]: Collection list containing successfully resolved clean song titles.
+    """
     setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:
@@ -34,10 +55,10 @@ def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[st
             que = tqdm(urls)
         else:
             que = urls
-        titles = []    
+        titles = []
         for i, j in enumerate(que, start = 1):
             titles.append(download_one(j, str(i), config))
         return titles
     except Exception as e:
         logger.error(e)
-        raise RuntimeError(e)
+        raise RuntimeError(e) from e

@@ -1,9 +1,18 @@
 import os
+from pathlib import Path
 from html2image import Html2Image
 from PIL import Image
-from pathlib import Path
 
 def renderer(html: str, css: str, img_dir: str, resolution: tuple[int, int] = (1920, 1080)):
+    """
+    Renders HTML and CSS strings into a static image file using headless browser.
+
+    Args:
+        html (str): Raw HTML template content string.
+        css (str): Raw CSS stylesheets string.
+        img_dir (str): Target file path where the generated screenshot should be written.
+        resolution (tuple[int, int]): Final desired output image resolution (width, height).
+    """
     output_dir = os.path.dirname(os.path.abspath(img_dir))
     output_filename = os.path.basename(img_dir)
     hti = Html2Image(temp_path=output_dir, size=(1920, 1080))
@@ -17,7 +26,7 @@ def renderer(html: str, css: str, img_dir: str, resolution: tuple[int, int] = (1
             '--disable-gpu-program-cache',
             '--no-zygote']
     hti.output_path = output_dir
-    hti.screenshot(html_str=html, css_str=css, save_as=output_filename)           
+    hti.screenshot(html_str=html, css_str=css, save_as=output_filename)
     if resolution != (1920, 1080):
         img = Image.open(str(Path(output_dir) / output_filename))
         resized_img = img.resize(resolution)
