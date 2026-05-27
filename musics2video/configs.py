@@ -1,5 +1,5 @@
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Callable
 from pathlib import Path
@@ -44,7 +44,7 @@ class M2VConfig:
     output_dir: str = './'
     video_format: str = 'mp4'
     resolution: tuple[int, int] = (1920, 1080)
-    fps: int = 30
+    fps: int = 10
     custom_template: str | None = None
     shorten_title: bool = True
     def __post_init__(self):
