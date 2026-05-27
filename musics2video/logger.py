@@ -15,7 +15,7 @@ def setup_logging(level: str = "INFO"):
     logging.basicConfig(level = level_dict[level.upper()],
             format = "[%(name)s] [%(levelname)s]: %(message)s")
 
-def get_logger(name: str):
+def get_logger(name: str) -> logging.logger:
     """
     Retrieves a logger instance named after the last module identifier component.
 

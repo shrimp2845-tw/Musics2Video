@@ -13,7 +13,7 @@ def get_local(original_path: str, name: str, config: M2VConfig = M2VConfig()) ->
         config (M2VConfig): System values and criteria requirements control container object.
 
     Returns:
-        str: Cleansed string mapping tracking extracted display titles labels values.
+        str: Cleansed string mapping tracking extracted display title.
     """
     title = str(Path(original_path).stem).strip()
     output_path = str(Path(config.temp_dir) / f'{name}.{config.yt_audio_format}')

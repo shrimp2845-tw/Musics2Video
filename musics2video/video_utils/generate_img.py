@@ -54,7 +54,6 @@ def generate_img(titles: list[str], config: M2VConfig = M2VConfig()):
 
     Args:
         titles (list[str]): Total list containing localized item title names.
-        cover (str | None): Optional fallback image path override value parameters.
         config (M2VConfig): Execution context values setup instance object.
     """
     setup_logging(level = config.level)
