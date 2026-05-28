@@ -43,7 +43,7 @@ class M2V:
             raise RuntimeError(e) from e
         finally:
             temp_path = Path(self.config.temp_dir).resolve()
-            if temp_path.exists() and temp_path.is_dir() and temp_path.name.endswith('_temp'):
+            if not self.config.keep_temp and temp_path.exists() and temp_path.is_dir() and temp_path.name.endswith('_temp'):
                 shutil.rmtree(temp_path)
     def generate_from_list(self, list_path: str, output_name: str):
         """
@@ -67,5 +67,5 @@ class M2V:
             raise RuntimeError(e) from e
         finally:
             temp_path = Path(self.config.temp_dir).resolve()
-            if temp_path.exists() and temp_path.is_dir() and temp_path.name.endswith('_temp'):
+            if not self.config.keep_temp and temp_path.exists() and temp_path.is_dir() and temp_path.name.endswith('_temp'):
                 shutil.rmtree(temp_path)

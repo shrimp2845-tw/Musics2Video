@@ -2,7 +2,7 @@
 ## About
 
 - **Author:** shrimp2845  
-- **Version:** 0.1.0
+- **Version:** 0.2.0
 - **requirement**: Python 3.10+, FFmpeg
 - **License:** MIT
 
@@ -81,21 +81,22 @@ musics2video list songs.txt --name "my_mixed_playlist.mp4" --style classic
 
 Both `download` and `list` commands accept the following options to customize the output:
 
-| Option | Alias | Description | Default |
-| --- | --- | --- | --- |
-| `--name` | `-n` | The filename for the final output video. | `output.mp4` |
-| `--out-dir` | `-o` | Target output directory path for the final video. | `./` |
-| `--style` | `-s` | Built-in visual style template (`classic`, `modern`). | `classic` |
-| `--custom-tmpl` | | Path to a folder containing a custom `template.html` and `style.css`. | `None` |
-| `--width` | | Output video resolution width in pixels. | `1920` |
-| `--height` | | Output video resolution height in pixels. | `1080` |
-| `--fps` | | Frames per second for the final video. | `10` |
-| `--yt-cover` / `--no-yt-cover` | | Fetch and use thumbnails from online video sources. | `--yt-cover` |
-| `--shorten` / `--no-shorten` | | Truncate long track titles to fit the layout. | `--shorten` |
-| `--audio-fmt` | | Target audio format for internal processing. | `opus` |
-| `--audio-q` | | Audio extraction quality (0=best, 9=worst). | `0` |
-| `--video-fmt` | | Output video file container format. | `mp4` |
-| `--level` | `-l` | Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`). | `INFO` |
+| Option                           | Alias | Description                                                           | Default          |
+|----------------------------------|-------|-----------------------------------------------------------------------|------------------|
+| `--name`                         | `-n`  | The filename for the final output video.                              | `output.mp4`     |
+| `--out-dir`                      | `-o`  | Target output directory path for the final video.                     | `./`             |
+| `--style`                        | `-s`  | Built-in visual style template (`classic`, `modern`).                 | `classic`        |
+| `--custom-tmpl`                  |       | Path to a folder containing a custom `template.html` and `style.css`. | `None`           |
+| `--width`                        |       | Output video resolution width in pixels.                              | `1920`           |
+| `--height`                       |       | Output video resolution height in pixels.                             | `1080`           |
+| `--fps`                          |       | Frames per second for the final video.                                | `10`             |
+| `--yt-cover` / `--no-yt-cover`   |       | Fetch and use thumbnails from online video sources.                   | `--yt-cover`     |
+| `--shorten` / `--no-shorten`     |       | Truncate long track titles to fit the layout.                         | `--shorten`      |
+| `--audio-fmt`                    |       | Target audio format for internal processing.                          | `opus`           |
+| `--audio-q`                      |       | Audio extraction quality (0=best, 9=worst).                           | `0`              |
+| `--video-fmt`                    |       | Output video file container format.                                   | `mp4`            |
+| `--level`                        | `-l`  | Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`).                  | `INFO`           |
+| `--keep-temp`/`--no-keep-temp`   |       | whether to remove temporary files or not                              | `--no-keep-temp` |
 
 ## Built-in templates display
 

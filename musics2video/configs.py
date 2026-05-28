@@ -32,6 +32,7 @@ class M2VConfig:
         fps (int): Frames per second configuration for the output video.
         custom_template (str | None): path to a local custom HTML and CSS template directory.
         shorten_title (bool): If True, truncates song titles to keep the layout tidy.
+        keep_temp (bool): If True, program won't remove temporary files.
     """
     temp_dir: str = f'./{datetime.now().strftime("%Y%m%d_%H%M%S_%f")}_temp/'
     temp_cover: str = 'temp_cover'
@@ -47,6 +48,7 @@ class M2VConfig:
     fps: int = 10
     custom_template: str | None = None
     shorten_title: bool = True
+    keep_temp: bool = False
     def __post_init__(self):
         cwd = Path.cwd().resolve()
         temp = Path(self.temp_dir).resolve()
