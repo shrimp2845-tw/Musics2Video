@@ -59,11 +59,12 @@ def get_yt_name(url: str) -> str | None:
     ytm = YTMusic()
     video_id = None
     parsed_url = urlparse(url)
-    if 'youtube.com' in parsed_url.netloc:
+    hostname = (parsed_url.hostname or '').lower()
+    if hostname == 'youtube.com' or hostname.endswith('.youtube.com'):
         query_params = parse_qs(parsed_url.query)
         if 'v' in query_params:
             video_id = query_params['v'][0]
-    elif 'youtu.be' in parsed_url.netloc:
+    elif hostname == 'youtu.be':
         video_id = parsed_url.path.strip('/')
     if not video_id or len(video_id) != 11:
         return None
