@@ -54,7 +54,7 @@ def read_audio_list(name: str) -> list[list[str | None]]:
                 raise ValueError(f'read_audio_list: Invalid line format {i.strip()}')
     return audio_list
 
-def get_data(list_path: str, default_cover: str | None = None, config: M2VConfig = M2VConfig()):
+def get_data(list_path: str, default_cover: str | None = None, config: M2VConfig | None = None):
     """
     Iteratively updates, imports, downloads, and maps raw track listing configurations data.
 
@@ -66,6 +66,8 @@ def get_data(list_path: str, default_cover: str | None = None, config: M2VConfig
     Returns:
         list[str]: Compiled array container tracking finalized display names indexes entries.
     """
+    if config is None:
+        config = M2VConfig()
     setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:

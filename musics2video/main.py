@@ -17,8 +17,7 @@ def build_config(level: str,
         height: int,
         fps: int,
         custom_template: Optional[Path],
-        shorten_title: bool,
-        temp_dir: Optional[str] = None) -> M2VConfig:
+        shorten_title: bool) -> M2VConfig:
     """Helper function to build an M2VConfig instance from CLI arguments."""
     resolution = (width, height)
     custom_template_str = str(custom_template) if custom_template else None
@@ -33,8 +32,6 @@ def build_config(level: str,
             'fps': fps,
             'custom_template': custom_template_str,
             'shorten_title': shorten_title}
-    if temp_dir:
-        config_kwargs['temp_dir'] = temp_dir
     return M2VConfig(**config_kwargs)
 
 ConfigOptions = {
@@ -49,8 +46,7 @@ ConfigOptions = {
     'height': typer.Option(1080, '--height', help='Output video resolution height in pixels.'),
     'fps': typer.Option(10, '--fps', help='Frames per second configuration for the final video.'),
     'custom_template': typer.Option(None, '--custom-tmpl', help='Path to a local custom HTML/CSS template folder.'),
-    'shorten_title': typer.Option(True, '--shorten/--no-shorten', help='Truncate long track titles to preserve layout integrity.'),
-    'temp_dir': typer.Option(None, '--temp-dir', help='Path for intermediate assets (auto-generated if omitted).')}
+    'shorten_title': typer.Option(True, '--shorten/--no-shorten', help='Truncate long track titles to preserve layout integrity.')}
 
 
 @app.command(name='download')
@@ -68,12 +64,11 @@ def generate_from_download(
         height: int = ConfigOptions['height'],
         fps: int = ConfigOptions['fps'],
         custom_template: Optional[Path] = ConfigOptions['custom_template'],
-        shorten_title: bool = ConfigOptions['shorten_title'],
-        temp_dir: Optional[str] = ConfigOptions['temp_dir']):
+        shorten_title: bool = ConfigOptions['shorten_title'],):
     """
     Download audio tracks from online URLs, render layout frames, and compile into a video.
     """
-    config = build_config(level, yt_audio_format, audio_quality, style, use_yt_cover, output_dir, video_format, width, height, fps, custom_template, shorten_title, temp_dir)
+    config = build_config(level, yt_audio_format, audio_quality, style, use_yt_cover, output_dir, video_format, width, height, fps, custom_template, shorten_title)
     processor = M2V(config=config)
     processor.generate_from_download(urls=urls, output_name=output_name)
 
@@ -92,12 +87,11 @@ def generate_from_list(list_path: Path = typer.Argument(..., help='Path to the f
         height: int = ConfigOptions['height'],
         fps: int = ConfigOptions['fps'],
         custom_template: Optional[Path] = ConfigOptions['custom_template'],
-        shorten_title: bool = ConfigOptions['shorten_title'],
-        temp_dir: Optional[str] = ConfigOptions['temp_dir']):
+        shorten_title: bool = ConfigOptions['shorten_title']):
     """
     Process a mixed batch list file (local files/downloads) to generate layouts and merge into a video.
     """
-    config = build_config(level, yt_audio_format, audio_quality, style, use_yt_cover, output_dir, video_format, width, height, fps, custom_template, shorten_title, temp_dir)
+    config = build_config(level, yt_audio_format, audio_quality, style, use_yt_cover, output_dir, video_format, width, height, fps, custom_template, shorten_title)
     processor = M2V(config=config)
     processor.generate_from_list(list_path=str(list_path), output_name=output_name)
 

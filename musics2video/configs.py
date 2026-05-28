@@ -48,10 +48,17 @@ class M2VConfig:
     custom_template: str | None = None
     shorten_title: bool = True
     def __post_init__(self):
-        if Path(self.temp_dir).resolve() == Path.cwd().resolve() or Path(self.temp_dir).resolve() in Path.cwd().resolve().parents:
-            raise ValueError('invalid temp_dir')
-        if (Path(self.temp_dir) / self.temp_cover).resolve() == Path(self.temp_dir).resolve() or (Path(self.temp_dir) / self.temp_cover).resolve() in Path(self.temp_dir).resolve().parents:
-            raise ValueError('invalid temp_cover')
+        cwd = Path.cwd().resolve()
+        temp = Path(self.temp_dir).resolve()
+        cover_dir = (temp / self.temp_cover).resolve()
+        if temp == Path("/"):
+            raise ValueError("invalid temp_dir: root")
+        if temp == Path.home():
+            raise ValueError("invalid temp_dir: home")
+        if temp == cwd:
+            raise ValueError("invalid temp_dir: cwd")
+        if cover_dir == temp:
+            raise ValueError('invalid temp_cover: temp_dir')
         if not os.path.exists(self.temp_dir):
             os.mkdir(self.temp_dir)
         if not os.path.exists(str(Path(self.temp_dir) / self.temp_cover)):

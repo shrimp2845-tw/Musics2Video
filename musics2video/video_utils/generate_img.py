@@ -48,7 +48,7 @@ def song_html(titles: list[str], index: int) -> str:
         html_pieces.append(f'<div class="song{active}">{j}</div>')
     return '\n'.join(html_pieces)
 
-def generate_img(titles: list[str], config: M2VConfig = M2VConfig()):
+def generate_img(titles: list[str], config: M2VConfig | None = None):
     """
     Converts the processed title blocks sequence iteratively into rendered frame image elements.
 
@@ -56,6 +56,8 @@ def generate_img(titles: list[str], config: M2VConfig = M2VConfig()):
         titles (list[str]): Total list containing localized item title names.
         config (M2VConfig): Execution context values setup instance object.
     """
+    if config is None:
+        config = M2VConfig()
     setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:

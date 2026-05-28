@@ -4,7 +4,7 @@ from tqdm import tqdm
 from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig
 
-def merge(songs_length: int, video_name: str, config: M2VConfig = M2VConfig()):
+def merge(songs_length: int, video_name: str, config: M2VConfig | None = None):
     """
     Combines rendered templates images and audios into segmented files, then concats into final video.
 
@@ -13,6 +13,8 @@ def merge(songs_length: int, video_name: str, config: M2VConfig = M2VConfig()):
         video_name (str): Target output video filename string context.
         config (M2VConfig): Configuration controls block setup criteria parameters wrapper.
     """
+    if config is None:
+        config = M2VConfig()
     setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:

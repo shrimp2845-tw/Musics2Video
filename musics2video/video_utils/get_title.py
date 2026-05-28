@@ -74,7 +74,7 @@ def get_yt_name(url: str) -> str | None:
         return song_title
     return None
 
-def get_title(url: str, config: M2VConfig = M2VConfig()) -> str:
+def get_title(url: str, config: M2VConfig | None = None) -> str:
     """
     Orchestrates metadata collection from multi-service endpoints.
 
@@ -85,6 +85,8 @@ def get_title(url: str, config: M2VConfig = M2VConfig()) -> str:
     Returns:
         str: Finalized target sanitized track header indicator string.
     """
+    if config is None:
+        config = M2VConfig()
     name = get_yt_name(url)
     if not name:
         name = get_all_name(url)

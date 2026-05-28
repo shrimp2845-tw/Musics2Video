@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 import shutil
 from .video_utils.get_data import get_data
 from .video_utils.download import download_musics
@@ -14,7 +14,9 @@ class M2V:
     This class provides high-level methods to build a combined video playlist
     either directly from a list of URLs or from a formatted local batch file.
     """
-    def __init__(self, config: M2VConfig = M2VConfig()):
+    def __init__(self, config: M2VConfig | None = None):
+        if config is None:
+            config = M2VConfig()
         self.config = config
         setup_logging(level=config.level)
         self.logger = get_logger(__name__)
@@ -40,9 +42,9 @@ class M2V:
         except Exception as e:
             raise RuntimeError(e) from e
         finally:
-            if os.path.isdir(self.config.temp_dir):
-                shutil.rmtree(self.config.temp_dir)
-
+            temp_path = Path(self.config.temp_dir).resolve()
+            if temp_path.exists() and temp_path.is_dir() and temp_path.name.endswith('_temp'):
+                shutil.rmtree(temp_path)
     def generate_from_list(self, list_path: str, output_name: str):
         """
         Processes a mixed list file (local/download), generates frame images, and merges them into a video.
@@ -64,5 +66,6 @@ class M2V:
         except Exception as e:
             raise RuntimeError(e) from e
         finally:
-            if os.path.isdir(self.config.temp_dir):
-                shutil.rmtree(self.config.temp_dir)
+            temp_path = Path(self.config.temp_dir).resolve()
+            if temp_path.exists() and temp_path.is_dir() and temp_path.name.endswith('_temp'):
+                shutil.rmtree(temp_path)

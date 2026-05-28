@@ -3,7 +3,7 @@ from pydub import AudioSegment
 from .get_title import sanitize
 from ..configs import M2VConfig
 
-def get_local(original_path: str, name: str, config: M2VConfig = M2VConfig()) -> str:
+def get_local(original_path: str, name: str, config: M2VConfig | None = None) -> str:
     """
     Processes a local file path, formats audio track file extensions, and extracts title metadata.
 
@@ -15,6 +15,8 @@ def get_local(original_path: str, name: str, config: M2VConfig = M2VConfig()) ->
     Returns:
         str: Cleansed string mapping tracking extracted display title.
     """
+    if config is None:
+        config = M2VConfig()
     title = str(Path(original_path).stem).strip()
     output_path = str(Path(config.temp_dir) / f'{name}.{config.yt_audio_format}')
     audio = AudioSegment.from_file(original_path)

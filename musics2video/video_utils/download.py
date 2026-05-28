@@ -6,7 +6,7 @@ from .get_title import get_title
 from ..logger import get_logger, setup_logging
 from ..configs import M2VConfig
 
-def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
+def download_one(url: str, name: str, config: M2VConfig | None = None) -> str:
     """
     Downloads a single online audio item and optional thumbnail using yt-dlp.
 
@@ -18,6 +18,8 @@ def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
     Returns:
         str: Cleaned track title fetched from metadata.
     """
+    if config is None:
+        config = M2VConfig()
     title = get_title(url, config = config)
     cmd = ['yt-dlp',
             '--no-warnings',
@@ -36,7 +38,7 @@ def download_one(url: str, name: str, config: M2VConfig = M2VConfig()) -> str:
     subprocess.run(cmd, check = True, stdout = subprocess.DEVNULL, stderr = sys.stderr)
     return title
 
-def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[str]:
+def download_musics(urls: list[str], config: M2VConfig | None = None) -> list[str]:
     """
     Downloads a sequence of online audios concurrently with an active progress bar view.
 
@@ -47,6 +49,8 @@ def download_musics(urls: list[str], config: M2VConfig = M2VConfig()) -> list[st
     Returns:
         list[str]: Collection list containing successfully resolved clean song titles.
     """
+    if config is None:
+        config = M2VConfig()
     setup_logging(level = config.level)
     logger = get_logger(__name__)
     try:

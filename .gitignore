@@ -36,3 +36,4 @@ kayoko.jpg
 *.mp4
 *.mp3
 test_template/
+__main__.py
