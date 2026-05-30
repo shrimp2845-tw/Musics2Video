@@ -22,10 +22,10 @@ def merge(songs_length: int, video_name: str, config: M2VConfig | None = None):
         file_list = str(Path(config.temp_dir) / 'videos.txt')
         videos = []
         logger.info('combining images and audios')
-        iter = range(1, songs_length+1)
+        que = range(1, songs_length+1)
         if config.level not in ('WARNING', 'ERROR', 'CRITICAL'):
-            iter = tqdm(iter)
-        for i in iter:
+            que = tqdm(que)
+        for i in que:
             video_path = str((Path(config.temp_dir) / f'{i}.{config.video_format}').resolve())
             audio_path = str(Path(config.temp_dir) / f'{i}.{config.yt_audio_format}')
             img_path = str(Path(config.temp_dir) / f'{i}.png')
@@ -45,7 +45,7 @@ def merge(songs_length: int, video_name: str, config: M2VConfig | None = None):
                     video_path]
             subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             videos.append(video_path)
-        with open(file_list, 'w') as f:
+        with open(file_list, 'w', encoding='utf-8') as f:
             for i in videos:
                 f.write(f"file '{i}'\n")
         logger.info('merging videos')

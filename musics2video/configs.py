@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Callable
 from pathlib import Path
 import shutil
-from .renderer import *
+from .renderer import html2image_renderer
 
 BASE_DIR = Path(__file__).resolve().parent
 
